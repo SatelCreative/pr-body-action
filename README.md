@@ -14,7 +14,7 @@ This action overwrites the pr body. Useful for when you want to append informati
 
 ## Example usage
 
-    uses: SatelCreative/pr-body-action@1.0.0
+    uses: AsasInnab/pr-body-action@v1
     with:
     	body: "This is my new PR body :)"
     	GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
