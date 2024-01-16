@@ -49,5 +49,4 @@ async function run() {
   }
 }
 
-// Call the asynchronous function
 run();
