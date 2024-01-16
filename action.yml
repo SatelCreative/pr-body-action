@@ -1,14 +1,14 @@
-name: "Update PR body"
-description: "Update PR body because PR comments are annoying :)"
+name: "Update PR description"
+description: "Updates PR description with github actions results"
 inputs:
   body:
-    description: "body"
+    description: "description"
     required: true
   GITHUB_TOKEN:
     description: "GITHUB_TOKEN"
     required: true
 runs:
-  using: "node12"
+  using: "node20"
   main: "index.js"
 branding:
   icon: "link"
