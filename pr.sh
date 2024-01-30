@@ -27,13 +27,26 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template "{{.body}}")
 echo "CURRENT_BODY=$CURRENT_BODY"
 
 # Check if newBody already exists in the current description
-if echo "$CURRENT_BODY" | grep -q "$BODY"; then
+if ! jq -e --arg BODY "$BODY" '. | index($BODY)' <<< "$CURRENT_BODY" > /dev/null; then
+  echo "New body does not exist in the current description. Updating..."
+  
+  # Concatenate the new text to the existing description
+  COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
+
+  # Update the pull request with the combined text
+  cd $REPO_PATH && gh pr edit $PR_NUMBER --body "$COMBINED_BODY"
+else
   echo "New body already exists in the current description. No update needed."
-  exit 0
 fi
 
-# Concatenate the new text to the existing description
-COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
+# # Check if newBody already exists in the current description
+# if echo "$CURRENT_BODY" | grep -q "$BODY"; then
+#   echo "New body already exists in the current description. No update needed."
+#   exit 0
+# fi
 
-# Update the pull request with the combined text
-gh pr edit $PR_NUMBER --body "$COMBINED_BODY"
+# # Concatenate the new text to the existing description
+# COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
+
+# # Update the pull request with the combined text
+# gh pr edit $PR_NUMBER --body "$COMBINED_BODY"
