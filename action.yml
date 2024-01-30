@@ -11,6 +11,9 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Check out repository
+      uses: actions/checkout@v4.1.1
+      
     - name: Run shell script
       env:
         BODY: ${{ inputs.body }}
