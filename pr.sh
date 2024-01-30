@@ -23,7 +23,7 @@ if [ "$PR_NUMBER" == "null" ]; then
 fi
 
 # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template "{{.body}}")
+CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template '{{json .body}}' | jq --raw-output '.')
 echo "CURRENT_BODY=$CURRENT_BODY"
 
 # Check if newBody already exists in the current description
