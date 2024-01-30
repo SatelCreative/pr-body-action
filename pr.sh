@@ -26,7 +26,7 @@ fi
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 
 # Check if newBody already exists in the current description
-if ! jq --exit-status --arg BODY "$BODY" 'if . != null then index($BODY) else false end' <<< "$CURRENT_BODY" > /dev/null; then
+if ! echo "$CURRENT_BODY" | jq --exit-status --arg BODY "$BODY" 'if .body != null then .body | index($BODY) else false end' > /dev/null; then
   echo "New body does not exist in the current description. Updating..."
   
   # Concatenate the new text to the existing description
@@ -37,6 +37,7 @@ if ! jq --exit-status --arg BODY "$BODY" 'if . != null then index($BODY) else fa
 else
   echo "New body already exists in the current description. No update needed."
 fi
+
 
 
 # # Fetch current pull request details
