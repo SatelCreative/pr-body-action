@@ -1,9 +1,9 @@
 #!/bin/bash
 
 set -e
+BODY=$1
+GITHUB_TOKEN=$2
 
-GITHUB_TOKEN=$1
-BODY=$2
 
 if [ -z "$GITHUB_TOKEN" ]; then
   echo "Error: GITHUB_TOKEN input is required"
