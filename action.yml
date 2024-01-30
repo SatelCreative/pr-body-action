@@ -8,8 +8,8 @@ inputs:
     description: "GITHUB_TOKEN"
     required: true
 runs:
-  using: "node12"
-  main: "index.js"
-branding:
-  icon: "link"
-  color: "blue"
+  using: "composite"
+  steps:
+    - name: Run shell script
+      shell: bash
+      run: ${{ github.action_path }}/DeployDockerImage.sh ${{ inputs.body }}  ${{ inputs.GITHUB_TOKEN }} 
