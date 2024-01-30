@@ -39,7 +39,7 @@ async function run() {
     const combinedBody = `${currentPR.body}\n\n${newBody}`;
 
     // Update the pull request with the combined text
-    await octokit.pulls.update({
+    await octokit.rest.pulls.update({
       ...context.repo,
       pull_number: prNumber,
       body: combinedBody,
