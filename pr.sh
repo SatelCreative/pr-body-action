@@ -24,11 +24,10 @@ fi
 
 
 # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template '{{.body}}')
-echo "CURRENT_BODY=$CURRENT_BODY"
+CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 
 # Check if newBody already exists in the current description
-if ! echo "$CURRENT_BODY" | jq -e --arg BODY "$BODY" '. | index($BODY)' > /dev/null; then
+if ! echo "$CURRENT_BODY" | jq --arg BODY "$BODY" 'index($BODY)' > /dev/null; then
   echo "New body does not exist in the current description. Updating..."
   
   # Concatenate the new text to the existing description
@@ -39,6 +38,7 @@ if ! echo "$CURRENT_BODY" | jq -e --arg BODY "$BODY" '. | index($BODY)' > /dev/n
 else
   echo "New body already exists in the current description. No update needed."
 fi
+
 
 
 # # Fetch current pull request details
