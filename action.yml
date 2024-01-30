@@ -12,4 +12,4 @@ runs:
   steps:
     - name: Run shell script
       shell: bash
-      run: ${{ github.action_path }}/DeployDockerImage.sh ${{ inputs.body }}  ${{ inputs.GITHUB_TOKEN }} 
+      run: ${{ github.action_path }}/pr.sh ${{ inputs.body }}  ${{ inputs.GITHUB_TOKEN }} 
