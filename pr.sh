@@ -14,6 +14,7 @@ fi
 
 # Get pull request number
 PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+echo "PR_NUMBER=$PR_NUMBER"
 
 if [ "$PR_NUMBER" == "null" ]; then
   echo "Error: No pull request found"
@@ -22,6 +23,7 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template "{{.body}}")
+echo "CURRENT_BODY=$CURRENT_BODY"
 
 # Check if newBody already exists in the current description
 if echo "$CURRENT_BODY" | grep -q "$BODY"; then
