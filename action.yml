@@ -1,15 +1,16 @@
 name: "Update PR body"
 description: "Update PR body because PR comments are annoying :)"
 inputs:
-  body:
-    description: "body"
-    required: true
   GITHUB_TOKEN:
     description: "GITHUB_TOKEN"
     required: true
+  body:
+    description: "body"
+    required: true
+
 runs:
   using: "composite"
   steps:
     - name: Run shell script
       shell: bash
-      run: ${{ github.action_path }}/pr.sh ${{ inputs.body }}  ${{ inputs.GITHUB_TOKEN }} 
+      run: ${{ github.action_path }}/pr.sh ${{ inputs.GITHUB_TOKEN }}  ${{ inputs.body }}
