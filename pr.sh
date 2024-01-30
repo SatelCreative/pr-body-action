@@ -24,7 +24,7 @@ fi
 
 # Fetch current pull request details using GitHub API
 CURRENT_BODY=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" | jq -r '.body')
-
+echo "CURRENT_BODY=$CURRENT_BODY"
 # Check if newBody already exists in the current description
 if ! echo "$CURRENT_BODY" | grep -q "$BODY"; then
   echo "New body does not exist in the current description. Updating..."
