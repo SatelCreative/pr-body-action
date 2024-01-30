@@ -13,7 +13,7 @@ runs:
   steps:
     - name: Run shell script
       env:
-      BODY: ${{ inputs.body }}
-      GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
+        BODY: ${{ inputs.body }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }} 
       shell: bash
       run: ${{ github.action_path }}/pr.sh 
