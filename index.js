@@ -24,7 +24,7 @@ async function run() {
     const octokit = github.getOctokit(githubToken);
 
     // Fetch the current pull request details
-    const { data: currentPR } = await octokit.pulls.get({
+    const { data: currentPR } = await octokit.rest.pulls.get({
       ...context.repo,
       pull_number: prNumber,
     });
