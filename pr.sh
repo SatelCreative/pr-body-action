@@ -22,8 +22,8 @@ if [ "$PR_NUMBER" == "null" ]; then
   exit 1
 fi
 
-# # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+# Fetch current pull request details using GitHub API
+CURRENT_BODY=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER" | jq -r '.body')
 
 # Check if newBody already exists in the current description
 if ! echo "$CURRENT_BODY" | grep -q "$BODY"; then
@@ -37,6 +37,7 @@ if ! echo "$CURRENT_BODY" | grep -q "$BODY"; then
 else
   echo "New body already exists in the current description. No update needed."
 fi
+
 
 # # Fetch current pull request details
 # CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
