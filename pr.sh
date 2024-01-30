@@ -34,7 +34,7 @@ if ! jq -e --arg BODY "$BODY" '. | index($BODY)' <<< "$CURRENT_BODY" > /dev/null
   COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
 
   # Update the pull request with the combined text
-  cd $REPO_PATH && gh pr edit $PR_NUMBER --body "$COMBINED_BODY"
+  gh pr edit $PR_NUMBER --body "$COMBINED_BODY"
 else
   echo "New body already exists in the current description. No update needed."
 fi
