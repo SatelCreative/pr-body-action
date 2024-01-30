@@ -2,6 +2,9 @@
 
 set -e
 
+GITHUB_TOKEN=$1
+BODY=$2
+
 if [ -z "$GITHUB_TOKEN" ]; then
   echo "Error: GITHUB_TOKEN input is required"
   exit 1
@@ -21,7 +24,7 @@ if [ "$PR_NUMBER" == "null" ]; then
 fi
 
 # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --json merged --template "{{.body}}")
+CURRENT_BODY=$(gh pr view $PR_NUMBER --json body --template "{{.body}}")
 
 # Check if newBody already exists in the current description
 if echo "$CURRENT_BODY" | grep -q "$BODY"; then
