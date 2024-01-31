@@ -26,8 +26,8 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
-# Remove existing BODY from CURRENT_BODY, and concatenate the new text
-COMBINED_BODY=$(echo "$CURRENT_BODY" | sed "s|$BODY||" | sed 's/^[ \t]*//;s/[ \t]*$//')
+# Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
+COMBINED_BODY=$(echo "$CURRENT_BODY" | sed "s|${BODY}||" | sed 's/^[ \t]*//;s/[ \t]*$//')
 COMBINED_BODY="${COMBINED_BODY} ${BODY}"
 
 echo "DEBUG: Updated body: $COMBINED_BODY"
