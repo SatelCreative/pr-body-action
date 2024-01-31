@@ -43,7 +43,7 @@ if echo "$CURRENT_BODY" | grep -q "$ESCAPED_BODY"; then
   echo "Updated body: $COMBINED_BODY"
   
   # Uncomment the following line when you are ready to actually update the pull request
-  # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 else
   echo "New body already exists in the current description. No update needed."
 fi
