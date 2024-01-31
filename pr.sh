@@ -29,8 +29,13 @@ echo "CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
+echo "DEBUG: Length of CURRENT_BODY=${#CURRENT_BODY}"
+echo "DEBUG: Length of BODY=${#BODY}"
+
 # Escape special characters in BODY
 ESCAPED_BODY=$(echo "$BODY" | sed 's/[][\\.*^$/]/\\&/g')
+
+echo "DEBUG: Length of ESCAPED_BODY=${#ESCAPED_BODY}"
 
 if [[ -n $ESCAPED_BODY && $CURRENT_BODY == *"$ESCAPED_BODY"* ]]; then
   echo "New body does not exist in the current description. Updating..."
@@ -38,10 +43,9 @@ if [[ -n $ESCAPED_BODY && $CURRENT_BODY == *"$ESCAPED_BODY"* ]]; then
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
   echo "Updated body: $COMBINED_BODY"
-  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  
+  # Uncomment the following line when you are ready to actually update the pull request
+  # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 else
   echo "New body already exists in the current description. No update needed."
 fi
-
-
-
