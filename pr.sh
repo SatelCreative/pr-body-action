@@ -27,7 +27,7 @@ echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Use grep to check if the pattern in $BODY is found in $CURRENT_BODY
-if awk -v body="$BODY" 'BEGIN {if (index(ENVIRON["CURRENT_BODY"], body) > 0) exit 0; else exit 1}'; then
+if awk -v RS='' -v ORS='\n\n' -v body="$BODY" 'BEGIN {if (index(ENVIRON["CURRENT_BODY"], body) > 0) exit 0; else exit 1}'; then
   echo "New body already exists in the current description. No update needed."
 else
   echo "New body does not exist in the current description. Updating..."
