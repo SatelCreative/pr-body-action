@@ -27,7 +27,7 @@ echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Use grep to check if the pattern in $BODY is found in $CURRENT_BODY
-if ! grep -qF "$BODY" <<< "$CURRENT_BODY"; then
+if ! awk -v new_body="$BODY" 'BEGIN{RS="";ORS="\n"} index($0, new_body) {exit 0}'; then
   echo "New body does not exist in the current description. Updating..."
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY} ${BODY}"
