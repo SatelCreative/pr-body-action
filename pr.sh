@@ -25,7 +25,7 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Use grep to check if the pattern in $BODY is found in $CURRENT_BODY
-if grep -q "$BODY" <<< "$CURRENT_BODY"; then
+if grep -Fq "$BODY" <<< "$CURRENT_BODY"; then
   echo "New body already exists in the current description. No update needed."
 else
   echo "New body does not exist in the current description. Updating..."
