@@ -28,12 +28,15 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Check if the pattern in $BODY is found in $CURRENT_BODY
 if [[ $CURRENT_BODY == *"$BODY"* ]]; then
-  echo "Body already exists in the current description."
+  echo "Body already exists in the current description. No update needed."
 else
   echo "Body does not exist in the current description. Updating..."
   
+  # Escape special characters in BODY for sed
+  ESCAPED_BODY=$(echo "$BODY" | sed 's/[\/&]/\\&/g')
+  
   # Remove the old BODY if it exists
-  NEW_BODY=$(echo "$CURRENT_BODY" | sed "s/$BODY//g")
+  NEW_BODY=$(echo "$CURRENT_BODY" | sed "s/$ESCAPED_BODY//g")
   
   # Concatenate the new text to the existing description
   COMBINED_BODY="${NEW_BODY} ${BODY}"
