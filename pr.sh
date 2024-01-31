@@ -35,5 +35,5 @@ else
   COMBINED_BODY="${CURRENT_BODY} ${BODY}"
   echo "DEBUG: Updated body: $COMBINED_BODY"
   # Uncomment the following line when you are ready to actually update the pull request
-  # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 fi
