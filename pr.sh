@@ -23,7 +23,7 @@ fi
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 
-if echo "$CURRENT_BODY" | grep -zq "$BODY"; then
+if grep -q "$BODY" <<< "$CURRENT_BODY"; then
   echo "New body already exists in the current description. No update needed."
 else
   echo "New body does not exist in the current description. Updating..."
