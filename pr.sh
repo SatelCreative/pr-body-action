@@ -39,7 +39,7 @@ if echo "$CURRENT_BODY" | grep -q "$BODY"; then
   echo "New body does not exist in the current description. Updating..."
   
   # Concatenate the new text to the existing description
-  COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
+  COMBINED_BODY="${CURRENT_BODY} ${BODY}"
   echo "Updated body: $COMBINED_BODY"
   
   # Uncomment the following line when you are ready to actually update the pull request
