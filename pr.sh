@@ -33,9 +33,9 @@ echo "DEBUG: Length of CURRENT_BODY=${#CURRENT_BODY}"
 echo "DEBUG: Length of BODY=${#BODY}"
 
 # Escape special characters in BODY
-ESCAPED_BODY=$(echo "$BODY" | sed 's/[][\\.*^$/]/\\&/g')
+# ESCAPED_BODY=$(echo "$BODY" | sed 's/[][\\.*^$/]/\\&/g')
 
-if echo "$CURRENT_BODY" | grep -q "$ESCAPED_BODY"; then
+if echo "$CURRENT_BODY" | grep -q "$BODY"; then
   echo "New body does not exist in the current description. Updating..."
   
   # Concatenate the new text to the existing description
