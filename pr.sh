@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-
+echo "BODY=$BODY"
 if [ -z "$GITHUB_TOKEN" ]; then
   echo "Error: GITHUB_TOKEN input is required"
   exit 1
@@ -22,6 +22,7 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+echo "CURRENT_BODY=$CURRENT_BODY"
 
 if grep -q "$BODY" <<< "$CURRENT_BODY"; then
   echo "New body already exists in the current description. No update needed."
