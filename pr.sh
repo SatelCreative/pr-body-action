@@ -22,14 +22,17 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
-echo "CURRENT_BODY=$CURRENT_BODY"
+echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
+# Use grep to check if the pattern in $BODY is found in $CURRENT_BODY
 if grep -q "$BODY" <<< "$CURRENT_BODY"; then
   echo "New body already exists in the current description. No update needed."
 else
   echo "New body does not exist in the current description. Updating..."
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY} ${BODY}"
-  echo "Updated body: $COMBINED_BODY"
-  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  echo "DEBUG: Updated body: $COMBINED_BODY"
+  # Uncomment the following line when you are ready to actually update the pull request
+  # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 fi
+
