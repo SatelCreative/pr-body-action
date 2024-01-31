@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-echo "BODY=$BODY"
+
 if [ -z "$GITHUB_TOKEN" ]; then
   echo "Error: GITHUB_TOKEN input is required"
   exit 1
@@ -22,6 +22,8 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+
+echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Use grep to check if the pattern in $BODY is found in $CURRENT_BODY
@@ -35,4 +37,3 @@ else
   # Uncomment the following line when you are ready to actually update the pull request
   # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 fi
-
