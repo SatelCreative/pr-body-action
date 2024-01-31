@@ -36,14 +36,13 @@ echo "DEBUG: Length of BODY=${#BODY}"
 # ESCAPED_BODY=$(echo "$BODY" | sed 's/[][\\.*^$/]/\\&/g')
 
 if echo "$CURRENT_BODY" | grep -q "$BODY"; then
+  echo "New body already exists in the current description. No update needed."
+else
   echo "New body does not exist in the current description. Updating..."
-  
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY} ${BODY}"
   echo "Updated body: $COMBINED_BODY"
   
   # Uncomment the following line when you are ready to actually update the pull request
   gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
-else
-  echo "New body already exists in the current description. No update needed."
 fi
