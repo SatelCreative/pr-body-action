@@ -26,16 +26,11 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
-# Check if the pattern in $BODY is found in $CURRENT_BODY
-if [[ "$CURRENT_BODY" != *"$BODY"* ]]; then
-  echo "Body does not exist in the current description. Updating..."
-  
-  # Concatenate the new text to the existing description
-  COMBINED_BODY="${CURRENT_BODY} ${BODY}"
-  echo "DEBUG: Updated body: $COMBINED_BODY"
+# Remove existing BODY from CURRENT_BODY, and concatenate the new text
+COMBINED_BODY=$(echo "$CURRENT_BODY" | sed "s|$BODY||" | sed 's/^[ \t]*//;s/[ \t]*$//')
+COMBINED_BODY="${COMBINED_BODY} ${BODY}"
 
-  # Uncomment the following line when you are ready to actually update the pull request
-  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
-else
-  echo "Body already exists in the current description. No update needed."
-fi
+echo "DEBUG: Updated body: $COMBINED_BODY"
+
+# Uncomment the following line when you are ready to actually update the pull request
+gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
