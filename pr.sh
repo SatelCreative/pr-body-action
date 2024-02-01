@@ -12,6 +12,7 @@ if [ -z "$BODY" ]; then
   exit 1
 fi
 
+
 # Get pull request number
 PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 
@@ -21,19 +22,20 @@ if [ "$PR_NUMBER" == "null" ]; then
 fi
 
 # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body | tr -d '\000')
-echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
+gh pr view $PR_NUMBER --json body -q .body > current_body.txt
+echo "DEBUG: CURRENT_BODY_FILE=$(cat current_body.txt)"
 echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
-if [[ "${CURRENT_BODY}" == *"${BODY}"* ]]; then
+if grep -Fq "$BODY" current_body.txt; then
   echo "New body already exists in the current description. No update needed."
 else
   # Concatenate the new text to the existing description
-  COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
+  COMBINED_BODY="$(cat current_body.txt)\n\n${BODY}"
 
   # Uncomment the following line when you are ready to actually update the pull request
-  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  echo -e "$COMBINED_BODY" > current_body.txt
+  gh pr edit $PR_NUMBER --body "$(cat current_body.txt)"
 
   echo "Updated pull request description."
 fi
