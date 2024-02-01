@@ -26,8 +26,11 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 echo "DEBUG: BODY=$BODY"
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
+# Escape special characters in BODY
+ESCAPED_BODY=$(awk '{gsub(/[.*+?^${}()|[\]\\]/, "\\\\&"); print $0}' <<< "$BODY")
+
 # Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
-COMBINED_BODY=$(awk -v body="$BODY" '{gsub("\|" body "\|", ""); print $0}' <<< "$CURRENT_BODY")
+COMBINED_BODY=$(awk -v body="$ESCAPED_BODY" '{gsub("\\|" body "\\|", ""); print $0}' <<< "$CURRENT_BODY")
 COMBINED_BODY="${COMBINED_BODY} ${BODY}"
 
 echo "DEBUG: Updated body: $COMBINED_BODY"
