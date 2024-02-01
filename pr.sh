@@ -27,22 +27,14 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
-if ! grep -qF "$BODY" <<< "$CURRENT_BODY"; then
+if ! diff -q <(echo -e "$CURRENT_BODY") <(echo -e "$BODY") > /dev/null; then
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
 
-  # Print the combined body for debugging
-  echo "DEBUG: Combined Body:"
-  echo -e "$COMBINED_BODY"
-
   # Uncomment the following line when you are ready to actually update the pull request
-  # gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
 
   echo "Updated pull request description."
 else
-  echo "DEBUG: Current Body:"
-  echo -e "$CURRENT_BODY"
-  echo "DEBUG: Body to be added:"
-  echo -e "$BODY"
   echo "New body already exists in the current description. No update needed."
 fi
