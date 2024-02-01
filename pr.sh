@@ -26,7 +26,7 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
-if [[ $(echo "$CURRENT_BODY" | grep  -zo "$BODY") ]]; then
+if [[ "${CURRENT_BODY}" == *"${BODY}"* ]]; then
   echo "New body already exists in the current description. No update needed."
   exit 0
 fi
