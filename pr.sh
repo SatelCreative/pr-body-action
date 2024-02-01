@@ -22,6 +22,7 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+echo "CURRENT_BODY=$CURRENT_BODY"
 
 # Check if newBody already exists in the current description
 if [[ $(echo "$CURRENT_BODY" | grep "$BODY") ]]; then
@@ -31,7 +32,6 @@ fi
 
 # Concatenate the new text to the existing description
 COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
-
 
 # Uncomment the following line when you are ready to actually update the pull request
 gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
