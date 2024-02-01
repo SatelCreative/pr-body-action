@@ -27,7 +27,7 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
-if ! diff -q <(echo -e "$CURRENT_BODY") <(echo -e "$BODY") > /dev/null; then
+if ! echo -e "$CURRENT_BODY" | grep -xF "$BODY" >/dev/null; then
   # Concatenate the new text to the existing description
   COMBINED_BODY="${CURRENT_BODY}\n\n${BODY}"
 
