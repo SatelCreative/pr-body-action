@@ -22,7 +22,8 @@ fi
 
 # Fetch current pull request details
 CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
-echo "CURRENT_BODY=$CURRENT_BODY"
+echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
+echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
 if [[ $(echo "$CURRENT_BODY" | grep  -zo "$BODY") ]]; then
