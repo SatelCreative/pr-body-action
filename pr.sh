@@ -21,7 +21,7 @@ if [ "$PR_NUMBER" == "null" ]; then
 fi
 
 # Fetch current pull request details
-CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body | tr -d '\000')
 echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
