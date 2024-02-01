@@ -25,7 +25,7 @@ CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
 echo "CURRENT_BODY=$CURRENT_BODY"
 
 # Check if newBody already exists in the current description
-if [[ $(echo "$CURRENT_BODY" | grep  -Pzo "$BODY") ]]; then
+if [[ $(echo "$CURRENT_BODY" | grep  -zo "$BODY") ]]; then
   echo "New body already exists in the current description. No update needed."
   exit 0
 fi
