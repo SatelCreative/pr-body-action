@@ -42,9 +42,7 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 # fi
 
 # Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
-COMBINED_BODY=$(awk -v body="$BODY" '{gsub("\\|" body "\\|", ""); print $0}' <<< "$CURRENT_BODY")
-echo "DEBUG222: CURRENT_BODY=$CURRENT_BODY"
-COMBINED_BODY="${COMBINED_BODY} ${BODY}"
+COMBINED_BODY="${CURRENT_BODY%|**App***}"
 
 echo "DEBUG: Updated body: $COMBINED_BODY"
 
