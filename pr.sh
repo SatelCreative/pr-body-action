@@ -29,7 +29,7 @@ echo "DEBUG: BODY=$BODY"
 # Check if newBody already exists in the current description
 if ! echo -e "$CURRENT_BODY" | grep -xF "$BODY" >/dev/null; then
   # Concatenate the new text to the existing description
-  COMBINED_BODY="${CURRENT_BODY}\n\n ${BODY}"
+  COMBINED_BODY="${CURRENT_BODY} ${BODY}"
 
   # Uncomment the following line when you are ready to actually update the pull request
   gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
