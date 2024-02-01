@@ -28,27 +28,25 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 
 # Check if the pattern in $BODY is found in $CURRENT_BODY
 #[[ $var =~ "$string" ]] # $var contains $string
-if [[ $CURRENT_BODY =~ "$BODY" ]]; then
-  echo "Body does not exist in the current description. Updating..."
+# if [[ $CURRENT_BODY =~ "$BODY" ]]; then
+#   echo "Body does not exist in the current description. Updating..."
   
-  # Concatenate the new text to the existing description
-  COMBINED_BODY="${CURRENT_BODY} ${BODY}"
-  echo "DEBUG: Updated body: $COMBINED_BODY"
+#   # Concatenate the new text to the existing description
+#   COMBINED_BODY="${CURRENT_BODY} ${BODY}"
+#   echo "DEBUG: Updated body: $COMBINED_BODY"
 
-  # Uncomment the following line when you are ready to actually update the pull request
-  gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
-else
-  echo "Body already exists in the current description. No update needed."
-fi
+#   # Uncomment the following line when you are ready to actually update the pull request
+#   gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+# else
+#   echo "Body already exists in the current description. No update needed."
+# fi
 
-# # Escape special characters in BODY
-# ESCAPED_BODY=$(awk '{gsub(/[.*+?^${}()|[\]\\]/, "\\\\&"); print $0}' <<< "$BODY")
+# Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
+COMBINED_BODY=$(awk -v body="$BODY" '{gsub("\\|" body "\\|", ""); print $0}' <<< "$CURRENT_BODY")
+echo "DEBUG222: CURRENT_BODY=$CURRENT_BODY"
+COMBINED_BODY="${COMBINED_BODY} ${BODY}"
 
-# # Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
-# COMBINED_BODY=$(awk -v body="$ESCAPED_BODY" '{gsub("\\|" body "\\|", ""); print $0}' <<< "$CURRENT_BODY")
-# COMBINED_BODY="${COMBINED_BODY} ${BODY}"
+echo "DEBUG: Updated body: $COMBINED_BODY"
 
-# echo "DEBUG: Updated body: $COMBINED_BODY"
-
-# # Uncomment the following line when you are ready to actually update the pull request
-# gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
+# Uncomment the following line when you are ready to actually update the pull request
+gh pr edit $PR_NUMBER --body "${COMBINED_BODY}"
