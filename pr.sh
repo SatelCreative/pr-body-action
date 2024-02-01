@@ -42,7 +42,7 @@ echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 # fi
 
 # Remove only the exact occurrence of BODY from CURRENT_BODY, and concatenate the new text
-COMBINED_BODY="${CURRENT_BODY%|**App"
+COMBINED_BODY="${CURRENT_BODY%|**App}"
 COMBINED_BODY="${COMBINED_BODY} ${BODY}"
 
 echo "DEBUG: Updated body: $COMBINED_BODY"
