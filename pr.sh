@@ -22,8 +22,8 @@ if [ "$PR_NUMBER" == "null" ]; then
 fi
 
 # Fetch current pull request details
-gh pr view $PR_NUMBER --json body -q .body > current_body.txt
-echo "DEBUG: CURRENT_BODY_FILE=$(cat current_body.txt)"
+CURRENT_BODY=$(gh pr view $PR_NUMBER --json body -q .body)
+echo "DEBUG: CURRENT_BODY=$CURRENT_BODY"
 echo "DEBUG: BODY=$BODY"
 
 # Check if newBody already exists in the current description
